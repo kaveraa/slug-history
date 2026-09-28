@@ -1,0 +1,71 @@
+{
+    "name": "kaveraa/slug-history",
+    "description": "Garde les anciens slugs et redirige en 301 vers la nouvelle adresse, pour Laravel et Symfony/Doctrine. Renommer un contenu ne casse plus aucun lien.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "slug",
+        "seo",
+        "redirect",
+        "301",
+        "permalink",
+        "url",
+        "sluggable",
+        "laravel",
+        "eloquent",
+        "symfony",
+        "doctrine"
+    ],
+    "authors": [
+        {
+            "name": "Augustin Kavera",
+            "homepage": "https://github.com/kaveraa"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "psr/clock": "^1.0"
+    },
+    "require-dev": {
+        "doctrine/dbal": "^4.2",
+        "doctrine/doctrine-bundle": "^2.13 || ^3.0",
+        "doctrine/orm": "^3.3",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "phpunit/phpunit": "^11.0 || ^12.0",
+        "symfony/config": "^7.2 || ^8.0",
+        "symfony/console": "^7.2 || ^8.0",
+        "symfony/dependency-injection": "^7.2 || ^8.0",
+        "symfony/framework-bundle": "^7.2 || ^8.0",
+        "symfony/http-kernel": "^7.2 || ^8.0"
+    },
+    "suggest": {
+        "laravel/framework": "Pour le fournisseur de services, le trait Eloquent et la redirection automatique (Laravel 12+)",
+        "doctrine/orm": "Pour l'ecoute des changements de slug sur les entites Doctrine (ORM 3+)",
+        "symfony/framework-bundle": "Pour le bundle Symfony et la redirection automatique"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kaveraa\\SlugHistory\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kaveraa\\SlugHistory\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kaveraa\\SlugHistory\\Laravel\\SlugHistoryServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
