@@ -4,15 +4,15 @@
 
 [![Tests](https://github.com/kaveraa/slug-history/actions/workflows/tests.yml/badge.svg)](https://github.com/kaveraa/slug-history/actions/workflows/tests.yml)
 [![Packagist](https://img.shields.io/packagist/v/kaveraa/slug-history.svg)](https://packagist.org/packages/kaveraa/slug-history)
-[![Téléchargements](https://img.shields.io/packagist/dt/kaveraa/slug-history.svg)](https://packagist.org/packages/kaveraa/slug-history)
+[![Downloads](https://img.shields.io/packagist/dt/kaveraa/slug-history.svg)](https://packagist.org/packages/kaveraa/slug-history)
 [![PHP](https://img.shields.io/packagist/dependency-v/kaveraa/slug-history/php.svg)](https://packagist.org/packages/kaveraa/slug-history)
-[![Licence](https://img.shields.io/github/license/kaveraa/slug-history.svg)](https://github.com/kaveraa/slug-history/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/kaveraa/slug-history.svg)](https://github.com/kaveraa/slug-history/blob/main/LICENSE)
 
-**Français** - [English](https://github.com/kaveraa/slug-history/blob/main/README.en.md)
+**English** - [Français](https://github.com/kaveraa/slug-history/blob/main/README.fr.md)
 
-Quelqu'un corrige une faute dans le titre d'un article. Le slug change. Et d'un coup l'ancienne adresse renvoie un 404 : les liens entrants sont morts, les partages ne mènent plus nulle part, et le référencement patiemment construit repart de zéro.
+Someone fixes a typo in the title of an article. The slug changes. And suddenly the old address answers a 404: incoming links are dead, shares lead nowhere, and the search ranking you patiently built starts again from zero.
 
-Les paquets qui fabriquent des slugs sont partout et excellents. Aucun ne garde l'ancienne adresse. Celui-ci ne fait que ça, pour **Laravel** et pour **Symfony / Doctrine**.
+Packages that build slugs are everywhere, and they are good. None of them keeps the old address. This one does only that, for **Laravel** and for **Symfony / Doctrine**.
 
 ```php
 #[KeepOldSlugs]
@@ -23,53 +23,53 @@ class Article extends Model
 ```
 
 ```
-GET /blog/mon-artcile     ->  301  /blog/mon-article
+GET /blog/my-artcile     ->  301  /blog/my-article
 ```
 
-- **Rien à écrire** : après l'installation et la migration, la redirection est branchée. Vous renommez, les anciennes adresses continuent de fonctionner.
-- **Une seule redirection** : une adresse abandonnée il y a trois renommages mène **directement** à l'adresse d'aujourd'hui. Jamais de chaîne de redirections, que les moteurs de recherche pénalisent.
-- **Le contenu vivant gagne toujours** : si une autre page reprend une adresse libérée, l'historique la lâche aussitôt. Personne n'est redirigé loin de la page qu'il demande vraiment.
-- **Aucune requête en trop** : la base n'est interrogée **que** lorsque la réponse est un 404. Une page qui existe ne coûte rien.
-- **La chaîne de requête est conservée** : `?page=2&utm_source=newsletter` arrive intact sur la nouvelle adresse.
-- **Multilingue** : le même slug peut vivre dans deux langues sans se mélanger.
-- **Léger** : une table, une interface PSR, rien d'autre.
+- **Nothing to write**: after the install and the migration, the redirect is wired. You rename, the old addresses keep working.
+- **One redirect only**: an address dropped three renames ago leads **straight** to today's address. Never a chain of redirects, which search engines dislike.
+- **Living content always wins**: if another page takes back a freed address, the history lets it go at once. Nobody is sent away from the page they actually asked for.
+- **No extra query**: the database is read **only** when the answer is a 404. A page that exists costs nothing.
+- **The query string is kept**: `?page=2&utm_source=newsletter` reaches the new address untouched.
+- **Several languages**: the same slug can live in two locales without mixing.
+- **Light**: one table, one PSR interface, nothing else.
 
 ---
 
-## Sommaire
+## Table of contents
 
-- [Le problème](#le-problème)
-- [Prérequis](#prérequis)
+- [The problem](#the-problem)
+- [Requirements](#requirements)
 - [Installation](#installation)
-- [Déclarer un contenu](#déclarer-un-contenu)
-- [Les trois règles](#les-trois-règles)
-- [Plusieurs langues, plusieurs rubriques](#plusieurs-langues-plusieurs-rubriques)
-- [Quand un contenu est supprimé](#quand-un-contenu-est-supprimé)
-- [Les commandes](#les-commandes)
-- [Ce que cela coûte](#ce-que-cela-coûte)
-- [Toutes les options](#toutes-les-options)
-- [Reprendre l'historique en main](#reprendre-lhistorique-en-main)
-- [Ce que ce paquet ne fait pas](#ce-que-ce-paquet-ne-fait-pas)
-- [Développement](#développement)
+- [Mark your content](#mark-your-content)
+- [The three rules](#the-three-rules)
+- [Several languages, several sections](#several-languages-several-sections)
+- [When content is deleted](#when-content-is-deleted)
+- [The commands](#the-commands)
+- [What it costs](#what-it-costs)
+- [All the options](#all-the-options)
+- [Taking the history in your own hands](#taking-the-history-in-your-own-hands)
+- [What this package does not do](#what-this-package-does-not-do)
+- [Development](#development)
 
-## Le problème
+## The problem
 
-Un slug se construit à partir d'un titre. Un titre, ça se corrige : une faute, un mot en trop, une reformulation après relecture. Chaque correction casse une adresse publique.
+A slug is built from a title. And a title gets fixed: a typo, one word too many, a rewrite after proofreading. Every fix breaks a public address.
 
 ```
-Publié en 2024      /blog/les-10-meilleurs-cadeaux-de-noel
-Corrigé en 2026     /blog/les-10-meilleures-idees-cadeaux-de-noel
+Published in 2024   /blog/the-10-best-christmas-gifts
+Fixed in 2026       /blog/the-10-best-christmas-gift-ideas
 ```
 
-Entre les deux : les liens des newsletters envoyées, les partages sur les réseaux, les signets, les articles qui vous citent, et l'index des moteurs de recherche. Tout pointe vers la première adresse, qui ne répond plus.
+In between: the links in the newsletters you already sent, the shares on social networks, the bookmarks, the articles that quote you, and the index of search engines. All of them point at the first address, which no longer answers.
 
-La parade habituelle est une table de redirections remplie à la main, que personne ne tient à jour. Ce paquet la remplit tout seul.
+The usual answer is a redirect table filled in by hand, that nobody keeps up to date. This package fills it on its own.
 
-## Prérequis
+## Requirements
 
-- PHP 8.2 ou plus.
-- Laravel 12+, ou Symfony 7.2+ avec Doctrine ORM 3+ et DBAL 4+.
-- Un contenu qui a déjà un slug. Ce paquet ne fabrique pas de slugs : gardez `spatie/laravel-sluggable`, `cviebrock/eloquent-sluggable`, l'extension Sluggable de Doctrine, ou votre propre code. Il se contente de retenir les anciens.
+- PHP 8.2 or more.
+- Laravel 12+, or Symfony 7.2+ with Doctrine ORM 3+ and DBAL 4+.
+- Content that already has a slug. This package does not build slugs: keep `spatie/laravel-sluggable`, `cviebrock/eloquent-sluggable`, the Doctrine Sluggable extension, or your own code. It only remembers the old ones.
 
 ## Installation
 
@@ -84,13 +84,13 @@ php artisan slugs:install
 php artisan migrate
 ```
 
-C'est tout. La redirection est branchée toute seule.
+That is all. The redirect is wired on its own.
 
-Elle est posée dans la pile globale des middlewares, et non dans un groupe de routes : une ancienne adresse ne correspond à aucune route, donc un middleware de groupe ne la verrait jamais passer.
+It sits in the global middleware stack, not in a route group: an old address matches no route, so a group middleware would never see it go by.
 
 ### Symfony
 
-Ajoutez le bundle dans `config/bundles.php` :
+Add the bundle in `config/bundles.php`:
 
 ```php
 return [
@@ -99,13 +99,13 @@ return [
 ];
 ```
 
-Puis créez la table :
+Then create the table:
 
 ```bash
 php bin/console slugs:install
 ```
 
-## Déclarer un contenu
+## Mark your content
 
 ### Laravel
 
@@ -120,15 +120,15 @@ class Article extends Model
 }
 ```
 
-Si votre colonne ne s'appelle pas `slug` :
+If your column is not called `slug`:
 
 ```php
 #[KeepOldSlugs(property: 'permalink')]
 ```
 
-### Symfony et Doctrine
+### Symfony and Doctrine
 
-L'attribut suffit, il n'y a pas de trait à poser :
+The attribute is enough, there is no trait to add:
 
 ```php
 use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
@@ -142,30 +142,30 @@ class Article
 }
 ```
 
-## Les trois règles
+## The three rules
 
-Tout le paquet tient dans ces trois règles. Elles sont couvertes par des tests, dans les deux frameworks.
+The whole package fits in these three rules. All of them are covered by tests, in both frameworks.
 
-**1. Une adresse abandonnée mène à l'adresse d'aujourd'hui, en une seule fois.**
+**1. A dropped address leads to today's address, in one hop.**
 
 ```
-/blog/premier-titre   ->  301  /blog/titre-final
-/blog/deuxieme-titre  ->  301  /blog/titre-final
+/blog/first-title    ->  301  /blog/final-title
+/blog/second-title   ->  301  /blog/final-title
 ```
 
-Peu importe le nombre de renommages : jamais deux redirections à la suite.
+Whatever the number of renames: never two redirects in a row.
 
-**2. Un contenu vivant l'emporte toujours sur l'historique.**
+**2. Living content always wins over the history.**
 
-L'article A libère `/agenda` en devenant `/agenda-2026`. Demain, l'article B est publié sous `/agenda`. À cet instant, l'historique lâche l'adresse : `/agenda` affiche l'article B, sans redirection. Sans cette règle, le paquet enverrait les visiteurs de B vers A, ce qui serait bien pire qu'un 404.
+Article A frees `/agenda` by becoming `/agenda-2026`. Tomorrow, article B is published under `/agenda`. At that moment the history lets the address go: `/agenda` shows article B, with no redirect. Without this rule, the package would send B's visitors to A, which would be far worse than a 404.
 
-**3. La base n'est lue que sur un 404.**
+**3. The database is read only on a 404.**
 
-Une page qui existe traverse le paquet sans une seule requête. L'historique n'est consulté qu'au moment où la réponse serait une erreur.
+A page that exists goes through the package without a single query. The history is asked only when the answer would be an error.
 
-## Plusieurs langues, plusieurs rubriques
+## Several languages, several sections
 
-Beaucoup de sites autorisent le même slug plusieurs fois, à condition qu'il soit unique dans sa langue ou dans sa rubrique. Dites-le avec `scope` : c'est la propriété qui rend l'adresse unique.
+Many sites allow the same slug more than once, as long as it is unique inside its language or its section. Say so with `scope`: it is the property that makes the address unique.
 
 ```php
 #[KeepOldSlugs(scope: 'locale')]
@@ -175,51 +175,51 @@ class Article extends Model
 }
 ```
 
-`/fr/contact` et `/en/contact` deviennent alors deux adresses indépendantes, avec chacune leur histoire.
+`/fr/contact` and `/en/contact` then become two independent addresses, each with its own history.
 
-Au moment de rediriger, l'adresse seule ne dit pas dans quelle portee chercher : donnez une fonction à l'option `scope`, elle reçoit la requête.
+When redirecting, the address alone does not say which scope to look in: give a function to the `scope` option, it receives the request.
 
 ```php
 // config/slug-history.php
-'scope' => fn ($request) => $request->segment(1) ?? '', // la langue est le premier morceau du chemin
+'scope' => fn ($request) => $request->segment(1) ?? '', // the language is the first path segment
 ```
 
-## Quand un contenu est supprimé
+## When content is deleted
 
-Ses anciennes adresses sont oubliées : elles ne doivent pas mener vers une page qui n'existe plus.
+Its old addresses are forgotten: they must not lead to a page that no longer exists.
 
-Avec les suppressions douces de Laravel (`SoftDeletes`), la mise à la corbeille **garde** l'historique, parce que le contenu peut revenir. C'est la suppression définitive (`forceDelete`) qui l'efface.
+With Laravel soft deletes, moving content to the bin **keeps** the history, because the content can come back. It is the permanent deletion (`forceDelete`) that clears it.
 
-## Les commandes
+## The commands
 
 ```bash
-php artisan slugs:history "App\Models\Article" 12   # les anciennes adresses d'un contenu
-php artisan slugs:purge --older-than=365            # efface les entrees de plus d'un an
+php artisan slugs:history "App\Models\Article" 12   # the old addresses of one piece of content
+php artisan slugs:purge --older-than=365            # clears entries older than a year
 ```
 
-Sous Symfony : `php bin/console slugs:history` et `php bin/console slugs:purge`.
+With Symfony: `php bin/console slugs:history` and `php bin/console slugs:purge`.
 
-Faut-il purger ? Une entrée pèse quelques dizaines d'octets et une redirection qui marche encore dix ans plus tard n'a jamais gêné personne. Purgez seulement si la table devient vraiment grosse, ou si votre politique de conservation l'impose.
+Should you purge at all? One entry weighs a few dozen bytes, and a redirect that still works ten years later has never bothered anyone. Purge only if the table really grows, or if your retention policy asks for it.
 
-## Ce que cela coûte
+## What it costs
 
-- **Une table**, `past_slugs`, avec un index unique sur `(slug, scope)`.
-- **Une ligne écrite par renommage**, pas par enregistrement : sauvegarder un article sans toucher au titre n'écrit rien.
-- **Une requête par 404**, et zéro le reste du temps.
+- **One table**, `past_slugs`, with a unique index on `(slug, scope)`.
+- **One row written per rename**, not per save: saving an article without touching the title writes nothing.
+- **One query per 404**, and none the rest of the time.
 
-## Toutes les options
+## All the options
 
-| Option | Défaut | Rôle |
+| Option | Default | Role |
 |---|---|---|
-| `table` | `past_slugs` | Nom de la table |
-| `status` | `301` | Code de la redirection. `308` si vous tenez à conserver la méthode HTTP |
-| `auto_redirect` | `true` | Branche la redirection toute seule, dans la pile globale. Mettez `false` pour la poser vous-même |
-| `keep_for_days` | `null` | Durée de conservation par défaut de `slugs:purge`. `null` : pour toujours |
-| `scope` | `''` | Portée par défaut. Une fonction recevant la requête est acceptée, pour un site multilingue |
+| `table` | `past_slugs` | Name of the table |
+| `status` | `301` | Redirect code. `308` if you want to keep the HTTP method |
+| `auto_redirect` | `true` | Wires the redirect on its own, in the global stack. Set `false` to wire it yourself |
+| `keep_for_days` | `null` | Default retention of `slugs:purge`. `null`: forever |
+| `scope` | `''` | Default scope. A function receiving the request is accepted, for a multilingual site |
 
-## Reprendre l'historique en main
+## Taking the history in your own hands
 
-Le service est injectable, pour les cas particuliers : une reprise de données, une refonte d'URL, un import.
+The service can be injected, for the special cases: a data migration, a URL redesign, an import.
 
 ```php
 use Kaveraa\SlugHistory\SlugHistory;
@@ -228,24 +228,24 @@ public function __construct(private SlugHistory $history)
 {
 }
 
-// Rediriger une adresse qui n'a jamais existe dans votre base
-$this->history->remember(Article::class, $article->id, 'ancienne-adresse', $article->slug);
+// Redirect an address that never existed in your database
+$this->history->remember(Article::class, $article->id, 'old-address', $article->slug);
 
-// Rendre une adresse a un contenu vivant
+// Give an address back to living content
 $this->history->release('agenda');
 
-// Ou mene cette adresse aujourd'hui ?
-$this->history->newPathFor('/blog/mon-artcile'); // /blog/mon-article
+// Where does this address lead today?
+$this->history->newPathFor('/blog/my-artcile'); // /blog/my-article
 ```
 
-## Ce que ce paquet ne fait pas
+## What this package does not do
 
-- **Il ne fabrique pas les slugs.** C'est le travail des paquets existants, qui le font bien.
-- **Il ne gère pas les redirections décidées à la main** (une campagne, une adresse courte, un ancien site). Pour cela, une table de redirections classique reste le bon outil, et les deux cohabitent très bien.
-- **Il ne connaît pas vos routes** : il remplace le morceau de chemin qui correspond à une ancienne adresse et redirige. Si votre structure d'URL change complètement, c'est une migration, pas un renommage.
-- **Il ne réécrit pas vos pages** : les liens internes qui pointent vers l'ancienne adresse fonctionneront, mais par une redirection. Mettez-les à jour quand vous le pouvez.
+- **It does not build slugs.** That is the job of the existing packages, and they do it well.
+- **It does not handle redirects decided by hand** (a campaign, a short address, an old website). A classic redirect table stays the right tool for that, and the two live together very well.
+- **It does not know your routes**: it replaces the path segment that matches an old address and redirects. If your whole URL structure changes, that is a migration, not a rename.
+- **It does not rewrite your pages**: internal links pointing at the old address will work, but through a redirect. Update them when you can.
 
-## Développement
+## Development
 
 ```bash
 git clone https://github.com/kaveraa/slug-history.git
@@ -254,12 +254,12 @@ composer install
 vendor/bin/phpunit
 ```
 
-Les trois rangements (mémoire, Eloquent, DBAL) passent le même contrat de test, `tests/Support/StoreContract.php` : c'est ce qui garantit que Laravel et Symfony se comportent exactement pareil.
+The three stores (memory, Eloquent, DBAL) pass the same test contract, `tests/Support/StoreContract.php`: this is what guarantees that Laravel and Symfony behave exactly the same.
 
-Pour proposer une modification, lisez le guide [CONTRIBUTING.md](https://github.com/kaveraa/slug-history/blob/main/CONTRIBUTING.md). Voir le [CHANGELOG](https://github.com/kaveraa/slug-history/blob/main/CHANGELOG.md) pour l'historique des versions.
+To suggest a change, read the [CONTRIBUTING.md](https://github.com/kaveraa/slug-history/blob/main/CONTRIBUTING.md) guide. See the [CHANGELOG](https://github.com/kaveraa/slug-history/blob/main/CHANGELOG.md) for the history of versions.
 
-Pour signaler une faille, ouvrez une [alerte de sécurité privée](https://github.com/kaveraa/slug-history/security/advisories/new) plutôt qu'une issue publique.
+To report a vulnerability, open a [private security advisory](https://github.com/kaveraa/slug-history/security/advisories/new) rather than a public issue.
 
-## Licence
+## License
 
-MIT. Voir [LICENSE](https://github.com/kaveraa/slug-history/blob/main/LICENSE).
+MIT. See [LICENSE](https://github.com/kaveraa/slug-history/blob/main/LICENSE).
