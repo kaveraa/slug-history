@@ -4,6 +4,13 @@
 
 **EN** All important changes of the package are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/).
 
+## [1.0.1] - 2026-09-29
+
+### Documentation
+
+- **FR** Le README affiché par défaut est maintenant en anglais (`README.md`), le français est dans `README.fr.md`.
+  **EN** The default README is now in English (`README.md`), the French version is in `README.fr.md`.
+
 ## [1.0.0] - 2026-09-28
 
 ### Ajouté / Added
@@ -21,4 +28,5 @@
 - **FR** Portées (`scope`) pour les sites multilingues, conservation de la chaîne de requête, et un contrat de test partagé par les trois rangements.
   **EN** Scopes for multilingual sites, query string kept on redirect, and one test contract shared by the three stores.
 
+[1.0.1]: https://github.com/kaveraa/slug-history/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/kaveraa/slug-history/releases/tag/v1.0.0
