@@ -4,6 +4,13 @@
 
 **EN** All important changes of the package are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [semantic versioning](https://semver.org/).
 
+## [1.0.2] - 2026-09-29
+
+### Documentation
+
+- **FR** La description du paquet dans `composer.json` est maintenant en anglais.
+  **EN** The package description in `composer.json` is now in English.
+
 ## [1.0.1] - 2026-09-29
 
 ### Documentation
@@ -28,5 +35,6 @@
 - **FR** Portées (`scope`) pour les sites multilingues, conservation de la chaîne de requête, et un contrat de test partagé par les trois rangements.
   **EN** Scopes for multilingual sites, query string kept on redirect, and one test contract shared by the three stores.
 
+[1.0.2]: https://github.com/kaveraa/slug-history/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/kaveraa/slug-history/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/kaveraa/slug-history/releases/tag/v1.0.0
