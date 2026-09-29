@@ -47,7 +47,7 @@ docker run --rm -v "$PWD":/app -w /app -u "$(id -u):$(id -g)" php:8.4-cli vendor
 - **Une adresse reprise par un contenu vivant l'emporte toujours** sur l'historique. C'est la règle la plus importante du paquet : ajoutez un test dès que vous y touchez.
 - **Le coeur ne connaît aucun framework** : `src/` à la racine ne dépend que de PHP et de `psr/clock`. Laravel vit dans `src/Laravel/`, Symfony dans `src/Symfony/`, Doctrine dans `src/Doctrine/`.
 - **Dépendances** : le paquet ne dépend que de `psr/clock`. Pas de nouvelle dépendance sans discussion.
-- **Documentation** : mettez à jour `README.md` (français) **et** `README.en.md` (anglais simple), ainsi que le `CHANGELOG.md` (section en haut, en français et en anglais).
+- **Documentation** : mettez à jour `README.md` (anglais simple) **et** `README.fr.md` (français), ainsi que le `CHANGELOG.md` (section en haut, en français et en anglais).
 - **Commits** : en anglais simple, compréhensible par un débutant. Phrases courtes, pas de jargon.
 - **Caractères** : uniquement des caractères du clavier dans les fichiers et les commits : `-` (pas de tiret long), `"` (pas de guillemets français), `->` (pas de flèche), pas d'emoji ni d'icône. Les lettres accentuées du français sont acceptées.
 
@@ -106,7 +106,7 @@ docker run --rm -v "$PWD":/app -w /app -u "$(id -u):$(id -g)" php:8.4-cli vendor
 - **An address taken back by living content always wins** over the history. It is the most important rule of the package: add a test as soon as you touch it.
 - **The core knows no framework**: `src/` at the root only depends on PHP and `psr/clock`. Laravel lives in `src/Laravel/`, Symfony in `src/Symfony/`, Doctrine in `src/Doctrine/`.
 - **Dependencies**: the package only depends on `psr/clock`. No new dependency without a discussion.
-- **Documentation**: update `README.md` (French) **and** `README.en.md` (simple English), and the `CHANGELOG.md` (section at the top, in French and English).
+- **Documentation**: update `README.md` (simple English) **and** `README.fr.md` (French), and the `CHANGELOG.md` (section at the top, in French and English).
 - **Commits**: in simple English, easy to read for a beginner. Short sentences, no jargon.
 - **Characters**: only keyboard characters in files and commits: `-` (no long dash), `"` (no French quotes), `->` (no arrow), no emoji or icon. French accented letters are fine.
 
