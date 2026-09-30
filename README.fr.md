@@ -1,6 +1,6 @@
 # Slug History
 
-<p align="center"><img src="https://raw.githubusercontent.com/kaveraa/slug-history/main/art/banner.svg" alt="Slug History" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/kaveraa/slug-history/fc3361b/art/banner.svg" alt="Slug History" width="100%"></p>
 
 [![Tests](https://github.com/kaveraa/slug-history/actions/workflows/tests.yml/badge.svg)](https://github.com/kaveraa/slug-history/actions/workflows/tests.yml)
 [![Packagist](https://img.shields.io/packagist/v/kaveraa/slug-history.svg)](https://packagist.org/packages/kaveraa/slug-history)
