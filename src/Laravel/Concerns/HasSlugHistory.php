@@ -11,26 +11,23 @@ use Kaveraa\SlugHistory\PastSlug;
 use Kaveraa\SlugHistory\SlugHistory;
 
 /**
- * À poser sur un modèle dont l'adresse peut changer : renommer le contenu ne
- * casse plus aucun lien.
- *
  * To put on a model whose address can change: renaming the content no longer
  * breaks any link.
  *
- * La colonne de l'adresse se déclare de deux façons :
+ * The address column can be declared in two ways:
  *
- *     #[KeepOldSlugs(property: 'permalink')]   sur la classe, elle l'emporte
- *     protected string $slugHistoryColumn = 'permalink';   dans le modèle
+ *     #[KeepOldSlugs(property: 'permalink')]   on the class, it wins
+ *     protected string $slugHistoryColumn = 'permalink';   in the model
  *
- * Le trait ne déclare pas lui-même $slugHistoryColumn : PHP refuse qu'une
- * classe redonne à une propriété de trait une autre valeur par défaut. C'est
- * donc votre modèle qui la déclare, et le trait la lit si elle est là.
+ * The trait does not declare $slugHistoryColumn itself: PHP does not let a
+ * class give a trait property another default value. So your model declares
+ * it, and the trait reads it when it is there.
  */
 trait HasSlugHistory
 {
     public static function bootHasSlugHistory(): void
     {
-        // Un contenu vivant prend cette adresse : l'historique doit la lâcher.
+        // A living content takes this address: the history must let it go.
         static::created(static function (Model $model): void {
             $model->releaseCurrentSlug();
         });
@@ -39,11 +36,11 @@ trait HasSlugHistory
             $model->rememberSlugChange();
         });
 
-        // Corbeille et suppression définitive n'ont pas le même sens. Un modèle
-        // simplement mis à la corbeille peut revenir : il garde ses adresses,
-        // sinon la restauration laisserait des 404 derrière elle. On n'oublie
-        // donc qu'au forceDeleted quand le modèle utilise SoftDeletes, et au
-        // deleted sinon, où la suppression est bel et bien définitive.
+        // Trash and final deletion do not mean the same thing. A model that is
+        // only put in the trash can come back: it keeps its addresses,
+        // otherwise restoring it would leave 404s behind. So we forget only
+        // on forceDeleted when the model uses SoftDeletes, and on deleted
+        // otherwise, where the deletion is really final.
         if (in_array(SoftDeletes::class, class_uses_recursive(static::class), true)) {
             static::restored(static function (Model $model): void {
                 $model->releaseCurrentSlug();
@@ -62,7 +59,7 @@ trait HasSlugHistory
     }
 
     /**
-     * Les anciennes adresses de ce contenu.
+     * The past addresses of this content.
      *
      * @return list<PastSlug>
      */
@@ -72,7 +69,7 @@ trait HasSlugHistory
     }
 
     /**
-     * Ce contenu n'a plus d'anciennes adresses.
+     * This content has no past addresses any more.
      */
     public function forgetPastSlugs(): void
     {
@@ -80,7 +77,7 @@ trait HasSlugHistory
     }
 
     /**
-     * L'historique lâche l'adresse que ce contenu porte aujourd'hui.
+     * The history lets go of the address this content has today.
      */
     public function releaseCurrentSlug(): void
     {
@@ -95,8 +92,8 @@ trait HasSlugHistory
     }
 
     /**
-     * Le type rangé dans l'historique. La classe du modèle, sauf si vous en
-     * décidez autrement.
+     * The type stored in the history. The model class, unless you decide
+     * otherwise.
      */
     public function slugHistoryType(): string
     {
@@ -109,8 +106,8 @@ trait HasSlugHistory
     }
 
     /**
-     * Retient l'ancienne adresse quand elle vient de changer. Rien à faire dans
-     * tous les autres cas : aucune requête.
+     * Keeps the old address when it has just changed. Nothing to do in all
+     * other cases: no query.
      */
     protected function rememberSlugChange(): void
     {
@@ -143,7 +140,7 @@ trait HasSlugHistory
     }
 
     /**
-     * La propriété du modèle si elle existe, sinon la colonne habituelle.
+     * The model property if it exists, otherwise the usual column.
      */
     protected function slugHistoryColumnName(): string
     {

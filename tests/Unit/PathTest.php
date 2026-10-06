@@ -48,7 +48,7 @@ final class PathTest extends TestCase
 
     public function test_the_query_string_is_not_its_business(): void
     {
-        // La chaîne de requête est remise par l'appelant : ici on ne touche qu'au chemin.
+        // The query string is put back by the caller: here we only touch the path.
         self::assertSame('/blog/neuf', Path::replaceSegment('/blog/vieux?page=2', 1, 'neuf'));
     }
 

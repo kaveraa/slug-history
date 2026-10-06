@@ -19,8 +19,6 @@ use Kaveraa\SlugHistory\SystemClock;
 use Psr\Clock\ClockInterface;
 
 /**
- * Branche le paquet sur Laravel : configuration, services, redirection.
- *
  * Wires the package into Laravel: configuration, services, redirection.
  */
 final class SlugHistoryServiceProvider extends ServiceProvider
@@ -41,7 +39,7 @@ final class SlugHistoryServiceProvider extends ServiceProvider
 
         $this->app->singleton(EloquentStore::class, static fn (Application $app): Store => $app->make(Store::class));
 
-        // Une horloge déjà déclarée par l'application garde la main.
+        // A clock already declared by the application keeps priority.
         $this->app->singletonIf(ClockInterface::class, SystemClock::class);
 
         $this->app->singleton(SlugHistory::class, static fn (Application $app): SlugHistory => new SlugHistory(
@@ -77,13 +75,12 @@ final class SlugHistoryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Le middleware s'ajoute tout seul : un composer require et un migrate
-     * suffisent.
+     * The middleware adds itself: a composer require and a migrate are enough.
      *
-     * Il est posé en middleware global, et non dans le groupe "web". Raison :
-     * les middlewares d'un groupe ne tournent que sur une route trouvée. Une
-     * ancienne adresse, elle, ne correspond à aucune route : le 404 naîtrait
-     * avant que le groupe ne soit joué, et rien ne le rattraperait.
+     * It is added as a global middleware, not in the "web" group. Reason: the
+     * middlewares of a group only run on a route that was found. An old address
+     * matches no route: the 404 would be raised before the group runs, and
+     * nothing would catch it.
      */
     private function autoRedirect(): void
     {

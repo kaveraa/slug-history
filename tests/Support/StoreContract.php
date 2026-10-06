@@ -10,12 +10,9 @@ use Kaveraa\SlugHistory\Store;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Le contrat que toute implémentation de Store doit tenir : en mémoire, avec
- * Eloquent, avec DBAL. Les trois passent exactement ces tests, sinon les deux
- * frameworks ne se comportent pas pareil.
- *
  * The contract every Store implementation has to keep: in memory, with
- * Eloquent, with DBAL. All three pass exactly these tests.
+ * Eloquent, with DBAL. All three pass exactly these tests, otherwise the two
+ * frameworks would not behave the same.
  */
 abstract class StoreContract extends TestCase
 {

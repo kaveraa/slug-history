@@ -7,8 +7,8 @@ namespace Kaveraa\SlugHistory\Tests\Laravel;
 use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Article;
 
 /**
- * Le réglage auto_redirect à false : le paquet retient toujours les anciennes
- * adresses, mais ne pose plus le middleware.
+ * The auto_redirect setting at false: the package still keeps the past
+ * addresses, but no longer adds the middleware.
  */
 final class AutoRedirectOffTest extends TestCase
 {
@@ -26,7 +26,7 @@ final class AutoRedirectOffTest extends TestCase
 
         $this->get('/articles/ancien')->assertNotFound();
 
-        // L'historique, lui, a bien fait son travail.
+        // The history itself did its job.
         self::assertSame('nouveau', $this->history()->find('ancien')?->currentSlug);
     }
 }

@@ -13,9 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Efface les anciennes adresses qui ont fait leur temps. Sans durée, ni ici ni
- * dans la configuration, la commande s'arrête : effacer tout l'historique par
- * accident n'est pas une option.
+ * Deletes the past addresses that are too old. With no duration, neither here
+ * nor in the configuration, the command stops: deleting the whole history by
+ * accident is not an option.
  */
 #[AsCommand(
     name: 'slugs:purge',
@@ -25,7 +25,7 @@ final class PurgeCommand extends Command
 {
     public function __construct(
         private readonly SlugHistory $history,
-        /** La durée de conservation de la configuration. Null : pour toujours. */
+        /** The retention duration from the configuration. Null: forever. */
         private readonly ?int $keepForDays = null,
     ) {
         parent::__construct();
@@ -62,8 +62,8 @@ final class PurgeCommand extends Command
     }
 
     /**
-     * Le nombre de jours demandé, ou celui de la configuration. Null quand la
-     * valeur n'a pas de sens : le message est déjà affiché.
+     * The number of days asked for, or the one from the configuration. Null when
+     * the value makes no sense: the message is already shown.
      */
     private function days(SymfonyStyle $io, mixed $given): ?int
     {

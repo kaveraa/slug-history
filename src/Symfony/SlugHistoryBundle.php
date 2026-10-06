@@ -23,23 +23,20 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
- * Bundle Symfony : la table des anciennes adresses, l'écoute des renommages
- * Doctrine, la redirection automatique et les trois commandes console.
- *
  * Symfony bundle: the table of past addresses, the Doctrine rename listener,
  * the automatic redirection and the three console commands.
  *
- * Activation dans config/bundles.php :
+ * Enable it in config/bundles.php:
  *
  *     Kaveraa\SlugHistory\Symfony\SlugHistoryBundle::class => ['all' => true],
  *
- * Configuration (config/packages/slug_history.yaml) :
+ * Configuration (config/packages/slug_history.yaml):
  *
  *     slug_history:
  *         table: past_slugs
- *         status: 301          # 308 pour garder la méthode HTTP
- *         auto_redirect: true  # branche l'écouteur de redirection tout seul
- *         keep_for_days: ~     # null = pour toujours
+ *         status: 301          # 308 to keep the HTTP method
+ *         auto_redirect: true  # adds the redirect listener by itself
+ *         keep_for_days: ~     # null = forever
  *         scope: ''
  */
 final class SlugHistoryBundle extends AbstractBundle
@@ -105,12 +102,12 @@ final class SlugHistoryBundle extends AbstractBundle
 
         $services = $container->services();
 
-        // L'alias Psr\Clock\ClockInterface n'est posé que si l'application n'en a
-        // pas déjà un (voir ClockAliasPass).
+        // The Psr\Clock\ClockInterface alias is set only if the application does
+        // not already have one (see ClockAliasPass).
         $services->set('slug_history.clock', SystemClock::class);
 
         if (!self::hasDoctrine($builder)) {
-            // Sans DoctrineBundle il n'y a pas de connexion : rien à brancher.
+            // Without DoctrineBundle there is no connection: nothing to wire.
             return;
         }
 
@@ -156,9 +153,9 @@ final class SlugHistoryBundle extends AbstractBundle
     }
 
     /**
-     * DoctrineBundle est-il installé ? Pendant le chargement des extensions, le
-     * conteneur reçu ne connaît pas les autres extensions : on regarde la liste
-     * des bundles du noyau.
+     * Is DoctrineBundle installed? While the extensions are loading, the
+     * container we get does not know the other extensions: we look at the list
+     * of bundles of the kernel.
      */
     private static function hasDoctrine(ContainerBuilder $builder): bool
     {

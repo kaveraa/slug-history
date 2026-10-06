@@ -7,22 +7,20 @@ namespace Kaveraa\SlugHistory;
 use DateTimeImmutable;
 
 /**
- * Une adresse qu'un contenu a portée, et l'adresse qu'il porte aujourd'hui.
- *
  * An address a piece of content used to have, and the one it has today.
  */
 final class PastSlug
 {
     public function __construct(
-        /** La classe du contenu concerné. */
+        /** The class of the content. */
         public readonly string $type,
-        /** Son identifiant. */
+        /** Its identifier. */
         public readonly int|string $id,
-        /** L'ancienne adresse, celle qui traîne dans les liens et les moteurs. */
+        /** The old address, the one still found in links and search engines. */
         public readonly string $slug,
-        /** L'adresse actuelle, celle vers laquelle rediriger. */
+        /** The current address, the one to redirect to. */
         public readonly string $currentSlug,
-        /** Facultatif : la langue, la rubrique parente, ce qui rend le slug unique. */
+        /** Optional: the language, the parent section, what makes the slug unique. */
         public readonly string $scope = '',
         public readonly ?DateTimeImmutable $rememberedAt = null,
     ) {

@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * La redirection vue du dehors : une vraie requête, une vraie 404, une vraie
- * réponse.
+ * The redirect seen from the outside: a real request, a real 404, a real
+ * response.
  */
 final class RedirectListenerTest extends BundleTestCase
 {

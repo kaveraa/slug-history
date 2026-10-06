@@ -17,13 +17,13 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 /**
- * Application Symfony minimale : FrameworkBundle + DoctrineBundle + SlugHistoryBundle.
+ * Minimal Symfony application: FrameworkBundle + DoctrineBundle + SlugHistoryBundle.
  */
 final class TestKernel extends Kernel
 {
     use MicroKernelTrait;
 
-    /** @var list<string> services rendus publics pour les tests */
+    /** @var list<string> services made public for the tests */
     public const EXPOSED = [
         'Kaveraa\SlugHistory\SlugHistory',
         'Kaveraa\SlugHistory\Store',
@@ -41,7 +41,7 @@ final class TestKernel extends Kernel
     ];
 
     /**
-     * @param array<string, mixed> $slugHistory configuration slug_history
+     * @param array<string, mixed> $slugHistory the slug_history configuration
      */
     public function __construct(private readonly array $slugHistory = [])
     {
@@ -56,8 +56,8 @@ final class TestKernel extends Kernel
     }
 
     /**
-     * Tout ce que Symfony écrit reste dans un dossier temporaire : le dépôt du
-     * paquet ne doit jamais recevoir de fichier engendré.
+     * Everything Symfony writes stays in a temporary folder: the package
+     * repository must never receive a generated file.
      */
     public function getProjectDir(): string
     {
@@ -87,7 +87,7 @@ final class TestKernel extends Kernel
 
     protected function build(ContainerBuilder $container): void
     {
-        // Les services du paquet sont privés : les tests ont besoin de les lire.
+        // The package services are private: the tests need to read them.
         $container->addCompilerPass(new class implements CompilerPassInterface {
             public function process(ContainerBuilder $container): void
             {
@@ -108,8 +108,8 @@ final class TestKernel extends Kernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        // Aucune route : tout chemin demandé finit en 404, ce que l'écouteur
-        // de redirection attend pour se réveiller.
+        // No route: every requested path ends in a 404, which is what the
+        // redirect listener waits for to wake up.
     }
 
     protected function configureContainer(ContainerConfigurator $container): void
@@ -137,7 +137,7 @@ final class TestKernel extends Kernel
 
         $container->extension('slug_history', $this->slugHistory);
 
-        // Sans journal, Symfony écrit les 404 attendues sur la sortie d'erreur.
+        // Without a logger, Symfony writes the expected 404s to the error output.
         $container->services()->set('logger', NullLogger::class);
     }
 }

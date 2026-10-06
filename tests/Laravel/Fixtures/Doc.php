@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Kaveraa\SlugHistory\Laravel\Concerns\HasSlugHistory;
 
 /**
- * Un contenu qui passe par la corbeille avant de disparaître.
+ * A content that goes through the trash before it disappears.
  *
  * @property string $slug
  */

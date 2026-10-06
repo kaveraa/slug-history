@@ -15,13 +15,13 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Démarre l'application de test, crée le schéma, et remet tout en place après.
+ * Starts the test application, creates the schema, and cleans up afterwards.
  */
 abstract class BundleTestCase extends TestCase
 {
     protected ?TestKernel $kernel = null;
 
-    /** @var callable|null gestionnaire d'exceptions actif avant le démarrage du kernel */
+    /** @var callable|null the exception handler active before the kernel starts */
     private mixed $exceptionHandler = null;
 
     protected function setUp(): void
@@ -37,14 +37,14 @@ abstract class BundleTestCase extends TestCase
             $this->kernel = null;
         }
 
-        // Symfony installe parfois un gestionnaire d'exceptions sans le retirer.
+        // Symfony sometimes installs an exception handler without removing it.
         while (self::currentExceptionHandler() !== $this->exceptionHandler) {
             restore_exception_handler();
         }
     }
 
     /**
-     * @param array<string, mixed> $config configuration slug_history
+     * @param array<string, mixed> $config the slug_history configuration
      */
     protected function boot(array $config = [], bool $install = true): ContainerInterface
     {

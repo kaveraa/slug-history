@@ -9,7 +9,7 @@ use Kaveraa\SlugHistory\Path;
 use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Translation;
 
 /**
- * Le même slug dans deux langues ne se mélange pas.
+ * The same slug in two languages does not get mixed up.
  */
 final class ScopeTest extends TestCase
 {
@@ -17,7 +17,7 @@ final class ScopeTest extends TestCase
     {
         parent::defineEnvironment($app);
 
-        // Sur ce site, la langue est le premier morceau du chemin.
+        // On this site, the language is the first piece of the path.
         $app->make('config')->set(
             'slug-history.scope',
             static fn (Request $request): string => Path::segments($request->getPathInfo())[0] ?? '',
@@ -33,7 +33,7 @@ final class ScopeTest extends TestCase
 
         $this->get('/fr/pages/contact')->assertRedirect('/fr/pages/nous-ecrire');
 
-        // La page anglaise porte toujours cette adresse : rien ne bouge.
+        // The English page still has this address: nothing moves.
         $this->get('/en/pages/contact')->assertOk()->assertSee('page ' . $en->id);
 
         $en->update(['slug' => 'write-to-us']);
@@ -60,8 +60,8 @@ final class ScopeTest extends TestCase
         $fr = Translation::query()->create(['slug' => 'contact', 'locale' => 'fr']);
         $fr->update(['slug' => 'nous-ecrire']);
 
-        // Une page anglaise prend l'adresse "contact" : la française n'est pas
-        // concernée.
+        // An English page takes the address "contact": the French one is not
+        // affected.
         Translation::query()->create(['slug' => 'contact', 'locale' => 'en']);
 
         self::assertNotNull($this->history()->find('contact', 'fr'));

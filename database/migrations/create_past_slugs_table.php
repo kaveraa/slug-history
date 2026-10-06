@@ -7,8 +7,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * La table des anciennes adresses.
- *
  * The table of past addresses.
  */
 return new class extends Migration {
@@ -17,33 +15,33 @@ return new class extends Migration {
         Schema::create($this->table(), function (Blueprint $table): void {
             $table->id();
 
-            // Le contenu concerné : sa classe et son identifiant. L'identifiant
-            // est une chaîne pour accueillir aussi bien un entier qu'un UUID.
+            // The content this row is about: its class and its identifier. The
+            // identifier is a string so it can hold an integer or a UUID.
             $table->string('subject_type', 191);
             $table->string('subject_id', 191);
 
-            // L'ancienne adresse, celle qui traîne dans les liens et les moteurs.
+            // The old address, the one still found in links and search engines.
             $table->string('slug', 191);
 
-            // L'adresse actuelle : on redirige sans avoir à charger le contenu.
+            // The current address: we redirect without loading the content.
             $table->string('current_slug', 191);
 
-            // La portée : la langue, la rubrique parente, ce qui rend l'adresse
-            // unique. Elle n'est surtout PAS nullable, et vaut la chaîne vide
-            // quand il n'y a pas de portée. Raison : dans l'index unique
-            // ci-dessous, MySQL comme PostgreSQL considèrent que NULL n'est
-            // jamais égal à NULL. Une colonne nullable laisserait donc entrer
-            // dix fois la même adresse, et l'unicité ne voudrait plus rien dire.
+            // The scope: the language, the parent section, what makes the address
+            // unique. It is NOT nullable, and it is the empty string when there
+            // is no scope. Reason: in the unique index below, MySQL and
+            // PostgreSQL both consider that NULL is never equal to NULL. A
+            // nullable column would let the same address in ten times, and
+            // uniqueness would mean nothing any more.
             $table->string('scope', 191)->default('');
 
-            // Toujours renseignée : c'est elle que regarde slugs:purge. La table
-            // Symfony est identique, pour que les deux frameworks partagent le schéma.
+            // Always filled: this is what slugs:purge looks at. The Symfony table
+            // is the same, so that both frameworks share the schema.
             $table->timestamp('created_at');
 
-            // Le coeur du contrat : une adresse ne mène qu'à un seul contenu.
+            // The heart of the contract: one address leads to only one content.
             $table->unique(['slug', 'scope']);
 
-            // La recherche par contenu : retarget, forget, la liste des adresses.
+            // Lookup by content: retarget, forget, the list of addresses.
             $table->index(['subject_type', 'subject_id']);
         });
     }

@@ -9,11 +9,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Branche l'horloge PSR du paquet, sans jamais écraser celle de l'application :
- * celle de Symfony implémente déjà l'interface, on ne la remplace pas.
- *
  * Wires the PSR clock of the package, without ever overwriting the one the
- * application already has.
+ * application already has: Symfony's own clock implements the interface, so
+ * it is not replaced.
  */
 final class ClockAliasPass implements CompilerPassInterface
 {

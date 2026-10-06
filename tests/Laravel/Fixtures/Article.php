@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kaveraa\SlugHistory\Laravel\Concerns\HasSlugHistory;
 
 /**
- * Le cas ordinaire : une colonne "slug", pas de portée.
+ * The ordinary case: a "slug" column, no scope.
  *
  * @property string $slug
  * @property string $title

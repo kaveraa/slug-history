@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-  # Permet de relancer la suite à la main sur une branche, depuis l'onglet Actions.
+  # Lets you run the test suite by hand on a branch, from the Actions tab.
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         php: ['8.2', '8.3', '8.4', '8.5']
         dependencies: [highest]
         include:
-          # Versions minimales supportées : Laravel 12, Symfony 7.2, Doctrine ORM 3.3
+          # Lowest supported versions: Laravel 12, Symfony 7.2, Doctrine ORM 3.3
           - { php: '8.2', dependencies: lowest }
 
     steps:
@@ -36,8 +36,8 @@ jobs:
 
       - run: vendor/bin/phpunit
 
-  # Contrôle unique exigé par la protection de la branche main :
-  # il ne passe que si tous les jobs de la matrice ont réussi.
+  # The single check required by the protection of the main branch:
+  # it passes only when all the jobs of the matrix have passed.
   tests-passed:
     name: All tests passed
     needs: tests
