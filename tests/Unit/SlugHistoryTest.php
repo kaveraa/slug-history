@@ -52,8 +52,8 @@ final class SlugHistoryTest extends TestCase
         $this->history->remember(self::ARTICLE, 1, 'premier', 'deuxieme');
         $this->history->remember(self::ARTICLE, 1, 'deuxieme', 'troisieme');
 
-        // La toute première adresse mène directement à la dernière : une seule
-        // redirection pour le visiteur, et pour le moteur de recherche.
+        // The very first address leads straight to the last one: a single
+        // redirect for the visitor, and for the search engine.
         self::assertSame('troisieme', $this->history->find('premier')?->currentSlug);
         self::assertSame('troisieme', $this->history->find('deuxieme')?->currentSlug);
         self::assertSame('/blog/troisieme', $this->history->newPathFor('/blog/premier'));
@@ -65,9 +65,9 @@ final class SlugHistoryTest extends TestCase
 
         self::assertSame('/agenda-2026', $this->history->newPathFor('/agenda'));
 
-        // Un autre contenu publié aujourd'hui prend l'adresse laissée libre :
-        // l'historique doit la lâcher, sinon on redirigerait le visiteur loin
-        // de la page qu'il demande vraiment.
+        // Another content published today takes the freed address: the
+        // history must let it go, otherwise we would redirect the visitor
+        // away from the page they really asked for.
         $this->history->release('agenda');
 
         self::assertNull($this->history->find('agenda'));
@@ -79,23 +79,23 @@ final class SlugHistoryTest extends TestCase
         $this->history->remember(self::ARTICLE, 1, 'agenda', 'agenda-2026');
         $this->history->remember(self::ARTICLE, 2, 'evenements', 'agenda');
 
-        // "agenda" appartient de nouveau à un contenu vivant, le numéro 2.
+        // "agenda" belongs to a living content again, number 2.
         self::assertNull($this->history->find('agenda'));
         self::assertSame('agenda', $this->history->find('evenements')?->currentSlug);
     }
 
     public function test_two_pages_can_swap_their_addresses_without_a_loop(): void
     {
-        // Le pire cas : deux contenus échangent leurs adresses. Si les deux
-        // entrées survivaient, /agenda mènerait à /programme qui mènerait à
-        // /agenda, et le visiteur tournerait en rond jusqu'à l'erreur du
-        // navigateur.
+        // The worst case: two contents swap their addresses. If both entries
+        // survived, /agenda would lead to /programme which would lead to
+        // /agenda, and the visitor would go round in circles until the
+        // browser gives an error.
         $this->history->remember(self::ARTICLE, 1, 'agenda', 'programme');
         $this->history->remember(self::ARTICLE, 2, 'programme', 'agenda');
 
         $this->assertNoLoop($this->store, $this->history);
 
-        // Dans l'autre ordre non plus.
+        // Not in the other order either.
         $store = new InMemoryStore();
         $other = new SlugHistory($store, $this->clock);
 
@@ -106,9 +106,9 @@ final class SlugHistoryTest extends TestCase
     }
 
     /**
-     * L'invariant du paquet : aucune adresse d'arrivée n'est elle-même une
-     * ancienne adresse. Une redirection ne peut donc jamais en appeler une
-     * autre, quel que soit l'ordre des renommages.
+     * The invariant of the package: no target address is itself a past
+     * address. So a redirect can never call another one, whatever the order
+     * of the renames.
      */
     private function assertNoLoop(InMemoryStore $store, SlugHistory $history): void
     {
@@ -124,10 +124,10 @@ final class SlugHistoryTest extends TestCase
 
     public function test_only_the_most_precise_segment_is_replaced(): void
     {
-        // Une rubrique et un article portant tous deux une ancienne adresse :
-        // on ne touche qu'au dernier morceau, celui qui désigne le contenu.
-        // Remplacer aussi le préfixe ferait courir le risque de fabriquer une
-        // adresse qui n'existe pas.
+        // A section and an article that both have a past address: we only
+        // touch the last piece, the one that names the content. Replacing
+        // the prefix too would risk building an address that does not
+        // exist.
         $this->history->remember(self::ARTICLE, 1, 'blog', 'actualites');
         $this->history->remember(self::ARTICLE, 2, 'mon-artcile', 'mon-article');
 
@@ -177,7 +177,7 @@ final class SlugHistoryTest extends TestCase
 
     public function test_a_negative_window_is_refused(): void
     {
-        // max(0, $days) aurait effacé toute la table sans rien dire.
+        // max(0, $days) would have deleted the whole table without a word.
         $this->history->remember(self::ARTICLE, 1, 'ancien', 'nouveau');
 
         $this->expectException(InvalidPurge::class);

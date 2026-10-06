@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 
 /**
- * Le cas ordinaire : une propriété slug, aucune portée.
+ * The ordinary case: a slug property, no scope.
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'articles')]

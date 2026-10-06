@@ -12,8 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Crée la table des anciennes adresses. À relancer sans crainte : elle ne fait
- * rien quand la table est déjà là.
+ * Creates the table of past addresses. Safe to run again: it does nothing
+ * when the table is already there.
  */
 #[AsCommand(
     name: 'slugs:install',

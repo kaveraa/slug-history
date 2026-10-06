@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Montre les anciennes adresses d'un contenu, et vers où elles mènent.
+ * Shows the past addresses of a content, and where they lead.
  *
  *     slugs:history "App\Entity\Article" 12
  */

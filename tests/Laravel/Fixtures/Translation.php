@@ -9,8 +9,8 @@ use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 use Kaveraa\SlugHistory\Laravel\Concerns\HasSlugHistory;
 
 /**
- * Le même slug peut exister dans chaque langue : la portée est la colonne
- * "locale".
+ * The same slug can exist in each language: the scope is the "locale"
+ * column.
  *
  * @property string $slug
  * @property string $locale

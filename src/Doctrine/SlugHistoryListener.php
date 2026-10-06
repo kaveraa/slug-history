@@ -13,19 +13,15 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Kaveraa\SlugHistory\SlugHistory;
 
 /**
- * Branche l'historique sur Doctrine : un contenu renommé laisse son ancienne
- * adresse derrière lui, un contenu neuf reprend la sienne, un contenu supprimé
- * n'en laisse aucune.
- *
  * Plugs the history into Doctrine: renamed content leaves its old address
  * behind, brand new content takes its address back, deleted content leaves none.
  *
- * L'écriture passe par le Store, donc par DBAL, jamais par l'EntityManager :
- * ouvrir un second flush au milieu du premier ne finit jamais bien.
+ * Writes go through the Store, so through DBAL, never through the EntityManager:
+ * opening a second flush in the middle of the first one never ends well.
  */
 final class SlugHistoryListener
 {
-    /** @var array<int, int|string> les identifiants notés avant la suppression */
+    /** @var array<int, int|string> the identifiers noted before the deletion */
     private array $doomed = [];
 
     public function __construct(
@@ -35,7 +31,7 @@ final class SlugHistoryListener
     }
 
     /**
-     * Le contenu a changé d'adresse : l'ancienne est retenue.
+     * The content changed its address: the old one is kept.
      */
     public function postUpdate(PostUpdateEventArgs $event): void
     {
@@ -72,8 +68,8 @@ final class SlugHistoryListener
     }
 
     /**
-     * Un contenu vivant prend cette adresse : l'historique la lâche, sinon on
-     * redirigerait au nez et à la barbe de son nouveau propriétaire.
+     * A living content takes this address: the history lets it go, otherwise we
+     * would redirect right under the nose of its new owner.
      */
     public function postPersist(PostPersistEventArgs $event): void
     {
@@ -100,8 +96,8 @@ final class SlugHistoryListener
     }
 
     /**
-     * L'identifiant est noté avant la suppression : Doctrine le remet à null dès
-     * que la ligne est effacée, et postRemove ne le verrait plus.
+     * The identifier is noted before the deletion: Doctrine sets it back to null
+     * as soon as the row is deleted, and postRemove would not see it any more.
      */
     public function preRemove(PreRemoveEventArgs $event): void
     {
@@ -120,7 +116,7 @@ final class SlugHistoryListener
     }
 
     /**
-     * Le contenu n'existe plus : ses anciennes adresses ne mènent nulle part.
+     * The content no longer exists: its past addresses lead nowhere.
      */
     public function postRemove(PostRemoveEventArgs $event): void
     {
@@ -144,8 +140,8 @@ final class SlugHistoryListener
     }
 
     /**
-     * Les métadonnées de la vraie classe : Doctrine passe parfois un proxy, dont
-     * le nom de classe ne porte aucun attribut.
+     * The metadata of the real class: Doctrine sometimes gives a proxy, whose
+     * class name carries no attribute.
      *
      * @return ClassMetadata<object>|null
      */

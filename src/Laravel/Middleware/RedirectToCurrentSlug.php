@@ -11,25 +11,22 @@ use Kaveraa\SlugHistory\SlugHistory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Rattrape les 404 : si le chemin demandé est une ancienne adresse, redirige
- * vers l'adresse actuelle.
- *
  * Catches 404s: if the requested path is a past address, redirects to the
  * current one.
  *
- * L'historique n'est consulté que lorsque la réponse est un 404. Une page qui
- * existe ne déclenche donc aucune requête supplémentaire : c'est la condition
- * pour laisser ce middleware en place en production.
+ * The history is read only when the response is a 404. So a page that exists
+ * causes no extra query: this is what makes it safe to keep this middleware
+ * in production.
  */
 final class RedirectToCurrentSlug
 {
-    /** Les seules méthodes qu'un moteur ou un vieux lien emploient. */
+    /** The only methods a search engine or an old link uses. */
     private const METHODS = ['GET', 'HEAD'];
 
     public function __construct(
         private readonly SlugHistory $history,
         private readonly int $status = 301,
-        /** Une portée fixe, ou une fonction qui la tire de la requête. */
+        /** A fixed scope, or a function that reads it from the request. */
         private readonly Closure|string $scope = '',
     ) {
     }
@@ -56,8 +53,8 @@ final class RedirectToCurrentSlug
     }
 
     /**
-     * La chaîne de requête suit la redirection : ?page=2, les paramètres de
-     * campagne, tout ce que le visiteur avait dans son lien.
+     * The query string follows the redirect: ?page=2, the campaign parameters,
+     * everything the visitor had in the link.
      */
     private function queryString(Request $request): string
     {

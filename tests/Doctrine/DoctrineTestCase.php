@@ -19,8 +19,8 @@ use Kaveraa\SlugHistory\SlugHistory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Un EntityManager SQLite en mémoire, les entités de test, la table des
- * anciennes adresses et une horloge arrêtée.
+ * An in-memory SQLite EntityManager, the test entities, the table of past
+ * addresses and a clock that does not move.
  */
 abstract class DoctrineTestCase extends TestCase
 {
@@ -60,7 +60,7 @@ abstract class DoctrineTestCase extends TestCase
     }
 
     /**
-     * Branche l'écouteur du paquet sur l'EntityManager de ce test.
+     * Wires the package listener into the EntityManager of this test.
      */
     protected function listen(): SlugHistoryListener
     {

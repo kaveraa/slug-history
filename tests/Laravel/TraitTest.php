@@ -11,7 +11,7 @@ use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Note;
 use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Post;
 
 /**
- * Le trait posé sur un modèle : ce qu'il retient, et ce qu'il laisse tomber.
+ * The trait put on a model: what it keeps, and what it drops.
  */
 final class TraitTest extends TestCase
 {
@@ -91,7 +91,7 @@ final class TraitTest extends TestCase
 
         $doc->delete();
 
-        // À la corbeille : le contenu peut revenir, ses adresses restent.
+        // In the trash: the content can come back, its addresses stay.
         self::assertTrue($doc->trashed());
         self::assertCount(1, $doc->pastSlugs());
         $this->get('/docs/guide')->assertRedirect('/docs/guide-2026');
@@ -107,7 +107,7 @@ final class TraitTest extends TestCase
         $doc = Doc::query()->create(['slug' => 'guide-2026']);
         $doc->delete();
 
-        // Pendant ce temps, l'historique se met à revendiquer cette adresse.
+        // Meanwhile, the history starts to claim this address.
         $this->store()->remember(new PastSlug('Autre\Contenu', 7, 'guide-2026', 'ailleurs', '', $this->clock->now()));
 
         self::assertNotNull($this->history()->find('guide-2026'));

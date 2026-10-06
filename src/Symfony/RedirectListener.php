@@ -11,23 +11,20 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Rattrape les 404 : si l'adresse demandée est une ancienne adresse connue, la
- * réponse devient une redirection vers l'adresse actuelle.
- *
  * Catches 404s: if the requested address is a known past address, the response
  * becomes a redirection to the current one.
  *
- * Rien n'est demandé à la base tant qu'il n'y a pas de 404 : l'écouteur ne se
- * réveille que là, sur la requête principale, et seulement en GET ou HEAD.
+ * Nothing is asked of the database until there is a 404: the listener only
+ * wakes up there, on the main request, and only for GET or HEAD.
  */
 final class RedirectListener
 {
-    /** Les méthodes qu'on peut rejouer ailleurs sans rien casser. */
+    /** The methods that can be replayed elsewhere without breaking anything. */
     private const SAFE = ['GET', 'HEAD'];
 
     public function __construct(
         private readonly SlugHistory $history,
-        /** 301 pour un déménagement définitif, 308 pour garder la méthode HTTP. */
+        /** 301 for a permanent move, 308 to keep the HTTP method. */
         private readonly int $status = 301,
         private readonly string $scope = '',
     ) {
@@ -55,8 +52,8 @@ final class RedirectListener
     }
 
     /**
-     * La nouvelle adresse, avec la chaîne de requête telle quelle : ?page=2 et
-     * les étiquettes de campagne doivent survivre à la redirection.
+     * The new address, with the query string as it is: ?page=2 and the
+     * campaign tags must survive the redirect.
      */
     private function target(Request $request, string $path): string
     {

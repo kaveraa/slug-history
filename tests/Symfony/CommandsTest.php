@@ -120,7 +120,7 @@ final class CommandsTest extends BundleTestCase
     }
 
     /**
-     * Une adresse très vieille, une toute fraîche.
+     * One very old address, one brand new.
      */
     private function seed(ContainerInterface $container): void
     {
