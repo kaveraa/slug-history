@@ -9,16 +9,14 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Types;
 
 /**
- * Crée la table des anciennes adresses, une fois et une seule.
- *
  * Creates the table of past addresses, once and only once.
  *
- * Sert à la commande d'installation et aux tests : une application qui préfère
- * ses propres migrations peut recopier la définition renvoyée par table().
+ * Used by the install command and by the tests: an application that prefers
+ * its own migrations can copy the definition returned by table().
  */
 final class SchemaInstaller
 {
-    /** La longueur des colonnes indexées : un index MySQL utf8mb4 tient à ce prix. */
+    /** The length of the indexed columns: a MySQL utf8mb4 index needs this limit. */
     private const LENGTH = 191;
 
     public function __construct(
@@ -28,7 +26,7 @@ final class SchemaInstaller
     }
 
     /**
-     * Crée la table si elle manque. Renvoie false quand il n'y avait rien à faire.
+     * Creates the table if it is missing. Returns false when there was nothing to do.
      */
     public function install(): bool
     {
@@ -52,11 +50,11 @@ final class SchemaInstaller
     }
 
     /**
-     * La définition de la table.
+     * The table definition.
      *
-     * scope n'est jamais nul : sur MySQL comme sur PostgreSQL, NULL n'est égal à
-     * rien, pas même à lui-même, et une colonne nullable ferait sauter l'unicité
-     * du couple (slug, scope).
+     * scope is never null: on MySQL as on PostgreSQL, NULL is equal to nothing,
+     * not even to itself, and a nullable column would break the uniqueness of
+     * the (slug, scope) pair.
      */
     public function table(): Table
     {

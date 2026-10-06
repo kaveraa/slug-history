@@ -11,7 +11,7 @@ use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Article;
 use Symfony\Component\Console\Command\Command as Console;
 
 /**
- * Les trois commandes artisan.
+ * The three artisan commands.
  */
 final class CommandsTest extends TestCase
 {

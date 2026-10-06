@@ -36,7 +36,7 @@ final class SlugHistoryBundleTest extends BundleTestCase
     {
         $container = $this->boot();
 
-        // Symfony fournit déjà une horloge PSR : le paquet se branche dessus.
+        // Symfony already provides a PSR clock: the package plugs into it.
         self::assertInstanceOf(ClockInterface::class, $container->get(ClockInterface::class));
         self::assertNotInstanceOf(\Kaveraa\SlugHistory\SystemClock::class, $container->get(ClockInterface::class));
     }

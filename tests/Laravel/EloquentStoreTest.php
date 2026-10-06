@@ -11,10 +11,10 @@ use Kaveraa\SlugHistory\Store;
 use Kaveraa\SlugHistory\Tests\Support\StoreContract;
 
 /**
- * Le pilote Eloquent tient le même contrat que le rangement en mémoire.
+ * The Eloquent driver keeps the same contract as the in-memory store.
  *
- * Pas de Testbench ici : le contrat est un simple TestCase PHPUnit, et une
- * table sur SQLite suffit à le jouer.
+ * No Testbench here: the contract is a plain PHPUnit TestCase, and a table
+ * on SQLite is enough to run it.
  */
 final class EloquentStoreTest extends StoreContract
 {
@@ -34,8 +34,8 @@ final class EloquentStoreTest extends StoreContract
             'foreign_key_constraints' => false,
         ]);
 
-        // La même table que la migration publiée : scope non nullable, index
-        // unique sur (slug, scope).
+        // The same table as the published migration: scope not nullable, unique
+        // index on (slug, scope).
         $this->capsule->getConnection()->getSchemaBuilder()->create('past_slugs', function (Blueprint $table): void {
             $table->id();
             $table->string('subject_type', 191);

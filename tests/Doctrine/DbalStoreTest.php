@@ -15,7 +15,7 @@ use Kaveraa\SlugHistory\Store;
 use Kaveraa\SlugHistory\Tests\Support\StoreContract;
 
 /**
- * Le rangement DBAL tient exactement le même contrat que celui en mémoire.
+ * The DBAL store keeps exactly the same contract as the in-memory one.
  */
 final class DbalStoreTest extends StoreContract
 {

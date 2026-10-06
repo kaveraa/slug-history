@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 
 /**
- * L'adresse ne s'appelle pas toujours slug.
+ * The address is not always named slug.
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'pages')]

@@ -9,7 +9,7 @@ use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 use Kaveraa\SlugHistory\Laravel\Concerns\HasSlugHistory;
 
 /**
- * L'adresse ne s'appelle pas "slug" : l'attribut le dit.
+ * The address is not named "slug": the attribute says so.
  *
  * @property string $permalink
  */

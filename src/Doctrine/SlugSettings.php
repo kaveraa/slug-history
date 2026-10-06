@@ -9,25 +9,22 @@ use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 use ReflectionClass;
 
 /**
- * Lit l'attribut #[KeepOldSlugs] d'une classe et résout les propriétés qu'il
- * désigne, une seule fois par classe.
- *
  * Reads the #[KeepOldSlugs] attribute of a class and resolves the properties it
  * names, once per class.
  */
 final class SlugSettings
 {
-    /** @var array<string, KeepOldSlugs|null> ce qui a déjà été cherché, trouvé ou non */
+    /** @var array<string, KeepOldSlugs|null> what was already looked up, found or not */
     private array $known = [];
 
     /**
-     * Les réglages posés sur la classe, ou null quand elle n'est pas suivie.
-     * L'attribut posé sur une classe parente vaut pour ses filles.
+     * The settings put on the class, or null when the class is not tracked.
+     * An attribute put on a parent class also applies to its children.
      */
     public function of(string $class): ?KeepOldSlugs
     {
-        // Le cache retient aussi les classes non suivies : ce sont les plus
-        // nombreuses, et on les rencontre à chaque événement Doctrine.
+        // The cache also keeps the classes that are not tracked: they are the
+        // most common, and we meet them on every Doctrine event.
         if (array_key_exists($class, $this->known)) {
             return $this->known[$class];
         }
@@ -36,8 +33,8 @@ final class SlugSettings
     }
 
     /**
-     * Le nom de la propriété portant l'adresse, ou null quand la classe n'est pas
-     * suivie ou que l'entité ne porte pas cette propriété.
+     * The name of the property that holds the address, or null when the class is
+     * not tracked or the entity does not have this property.
      *
      * @param ClassMetadata<object> $meta
      */
@@ -53,8 +50,8 @@ final class SlugSettings
     }
 
     /**
-     * La portée lue sur l'entité : la langue, la rubrique parente. Chaîne vide
-     * quand l'attribut n'en désigne pas, ou quand la valeur est nulle.
+     * The scope read on the entity: the language, the parent section. Empty
+     * string when the attribute names none, or when the value is null.
      *
      * @param ClassMetadata<object> $meta
      */
@@ -72,7 +69,7 @@ final class SlugSettings
     }
 
     /**
-     * L'identifiant de l'entité, ou null quand elle n'en a pas encore un seul.
+     * The identifier of the entity, or null when it does not have a single one yet.
      *
      * @param ClassMetadata<object> $meta
      */
@@ -90,8 +87,8 @@ final class SlugSettings
     }
 
     /**
-     * L'attribut, en remontant les classes parentes : une entité qui hérite d'une
-     * superclasse mappée doit en hériter aussi.
+     * The attribute, looking up the parent classes: an entity that extends a
+     * mapped superclass must inherit it too.
      */
     private function read(string $class): ?KeepOldSlugs
     {

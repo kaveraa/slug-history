@@ -7,41 +7,39 @@ namespace Kaveraa\SlugHistory;
 use DateTimeImmutable;
 
 /**
- * Le rangement des anciennes adresses : une implémentation par ORM.
- *
  * Where the past addresses are kept: one implementation per ORM.
  *
- * Le couple (slug, scope) est unique : une adresse ne peut pas mener à deux
- * contenus à la fois.
+ * The (slug, scope) pair is unique: an address cannot lead to two contents
+ * at the same time.
  */
 interface Store
 {
     /**
-     * Garde une ancienne adresse. Remplace la ligne existante pour le même
-     * couple (slug, scope), s'il y en a une.
+     * Keeps an old address. Replaces the existing row for the same
+     * (slug, scope) pair, if there is one.
      */
     public function remember(PastSlug $past): void;
 
     /**
-     * L'ancienne adresse cherchée, ou null. Le type restreint la recherche à
-     * une seule classe de contenu.
+     * The past address we look for, or null. The type limits the search to
+     * one content class.
      */
     public function find(string $slug, string $scope = '', ?string $type = null): ?PastSlug;
 
     /**
-     * Un contenu vivant prend cette adresse : l'historique doit la lâcher,
-     * sinon on redirigerait au nez et à la barbe du nouveau propriétaire.
+     * A living content takes this address: the history must let it go,
+     * otherwise we would redirect right under the nose of the new owner.
      */
     public function release(string $slug, string $scope = '', ?string $type = null): void;
 
     /**
-     * Le contenu a encore changé d'adresse : toutes ses anciennes adresses
-     * pointent désormais vers la nouvelle.
+     * The content changed its address again: all its past addresses now
+     * point to the new one.
      */
     public function retarget(string $type, int|string $id, string $currentSlug): void;
 
     /**
-     * Le contenu n'existe plus : ses anciennes adresses ne mènent nulle part.
+     * The content no longer exists: its past addresses lead nowhere.
      */
     public function forget(string $type, int|string $id): void;
 
@@ -51,7 +49,7 @@ interface Store
     public function allFor(string $type, int|string $id): array;
 
     /**
-     * Efface les entrées plus vieilles que cette date. Renvoie le nombre effacé.
+     * Deletes the entries older than this date. Returns how many were deleted.
      */
     public function purge(DateTimeImmutable $before): int;
 }

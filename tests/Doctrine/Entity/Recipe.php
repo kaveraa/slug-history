@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kaveraa\SlugHistory\Attribute\KeepOldSlugs;
 
 /**
- * Le même slug peut exister dans deux langues : la portée les sépare.
+ * The same slug can exist in two languages: the scope keeps them apart.
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'recipes')]

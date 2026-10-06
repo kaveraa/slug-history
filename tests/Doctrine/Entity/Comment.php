@@ -7,8 +7,8 @@ namespace Kaveraa\SlugHistory\Tests\Doctrine\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Sans l'attribut : le paquet ne doit jamais s'en occuper, même si l'entité a
- * une propriété qui s'appelle slug.
+ * Without the attribute: the package must never touch it, even if the entity
+ * has a property named slug.
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'comments')]

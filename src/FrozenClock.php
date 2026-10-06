@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 
 /**
- * Une horloge arrêtée, pour les tests.
+ * A clock that does not move, for the tests.
  */
 final class FrozenClock implements ClockInterface
 {

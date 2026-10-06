@@ -7,8 +7,8 @@ namespace Kaveraa\SlugHistory;
 use DateTimeImmutable;
 
 /**
- * Un rangement en mémoire : pour les tests, et pour une application qui ne veut
- * pas de table.
+ * An in-memory store: for the tests, and for an application that does not
+ * want a table.
  */
 final class InMemoryStore implements Store
 {
