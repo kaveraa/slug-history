@@ -18,8 +18,8 @@ use Orchestra\Testbench\TestCase as Testbench;
 use Psr\Clock\ClockInterface;
 
 /**
- * Socle des tests Laravel : le fournisseur de services, SQLite en mémoire, la
- * vraie migration du paquet, et quelques routes qui répondent par le slug.
+ * Base of the Laravel tests: the service provider, in-memory SQLite, the real
+ * migration of the package, and a few routes that answer with the slug.
  */
 abstract class TestCase extends Testbench
 {
@@ -51,7 +51,7 @@ abstract class TestCase extends Testbench
 
     protected function defineDatabaseMigrations(): void
     {
-        // La migration publiée du paquet, jouée telle quelle.
+        // The published migration of the package, run as it is.
         $migration = require __DIR__ . '/../../database/migrations/create_past_slugs_table.php';
         $migration->up();
 
@@ -105,8 +105,8 @@ abstract class TestCase extends Testbench
             return 'doc ' . $doc->id;
         });
 
-        // Une route POST qui répond 404 : de quoi vérifier que le middleware
-        // ne touche pas aux méthodes autres que GET et HEAD.
+        // A POST route that answers 404: enough to check that the middleware
+        // does not touch methods other than GET and HEAD.
         $router->post('/articles/{slug}', static function (string $slug): string {
             $article = Article::query()->where('slug', $slug)->first();
 

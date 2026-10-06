@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Kaveraa\SlugHistory\Laravel\Concerns\HasSlugHistory;
 
 /**
- * L'adresse ne s'appelle pas "slug" non plus, mais sans attribut : c'est la
- * propriété du modèle qui le dit.
+ * The address is not named "slug" either, but without the attribute: the
+ * model property says so.
  *
  * @property string $reference
  */

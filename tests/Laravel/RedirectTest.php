@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Article;
 
 /**
- * Le parcours complet : on renomme, l'ancienne adresse redirige.
+ * The full journey: we rename, the old address redirects.
  */
 final class RedirectTest extends TestCase
 {
@@ -45,7 +45,7 @@ final class RedirectTest extends TestCase
         $this->get('/articles/un')->assertRedirect('/articles/trois');
         $this->get('/articles/deux')->assertRedirect('/articles/trois');
 
-        // Une seule ligne par ancienne adresse, et les deux mènent au même endroit.
+        // One row per past address, and both lead to the same place.
         self::assertCount(2, $article->pastSlugs());
     }
 
@@ -56,7 +56,7 @@ final class RedirectTest extends TestCase
 
         $this->get('/articles/agenda')->assertRedirect('/articles/agenda-2025');
 
-        // Un nouveau contenu reprend l'adresse : l'historique doit la lâcher.
+        // A new content takes the address back: the history must let it go.
         $reuse = Article::query()->create(['slug' => 'agenda', 'title' => 'Agenda 2026']);
 
         $this->get('/articles/agenda')->assertOk()->assertSee('article ' . $reuse->id);

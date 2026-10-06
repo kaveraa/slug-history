@@ -11,7 +11,7 @@ use Kaveraa\SlugHistory\Tests\Laravel\Fixtures\Translation;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 /**
- * La lecture de l'attribut, sans base ni application.
+ * Reading the attribute, with no database and no application.
  */
 final class SlugSettingsTest extends PhpUnitTestCase
 {

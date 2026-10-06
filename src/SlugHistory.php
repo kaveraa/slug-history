@@ -9,9 +9,6 @@ use Kaveraa\SlugHistory\Exception\InvalidPurge;
 use Psr\Clock\ClockInterface;
 
 /**
- * Le point d'entrée : retenir une ancienne adresse, et retrouver où elle mène
- * aujourd'hui.
- *
  * The entry point: remember an old address, and find where it leads today.
  */
 final class SlugHistory
@@ -23,7 +20,7 @@ final class SlugHistory
     }
 
     /**
-     * Le contenu change d'adresse. Renvoie false quand il n'y a rien à retenir.
+     * The content changes its address. Returns false when there is nothing to keep.
      */
     public function remember(string $type, int|string $id, string $oldSlug, string $newSlug, string $scope = ''): bool
     {
@@ -31,11 +28,11 @@ final class SlugHistory
             return false;
         }
 
-        // La nouvelle adresse appartient maintenant à un contenu vivant : si
-        // l'historique la revendiquait encore, il la lâche.
+        // The new address now belongs to a living content: if the history
+        // still claimed it, it lets it go.
         $this->store->release($newSlug, $scope);
 
-        // Les anciennes adresses déjà connues doivent suivre le contenu.
+        // The past addresses already known must follow the content.
         $this->store->retarget($type, $id, $newSlug);
 
         $this->store->remember(new PastSlug($type, $id, $oldSlug, $newSlug, $scope, $this->clock->now()));
@@ -44,7 +41,7 @@ final class SlugHistory
     }
 
     /**
-     * Un contenu vivant prend cette adresse : l'historique la lâche.
+     * A living content takes this address: the history lets it go.
      */
     public function release(string $slug, string $scope = '', ?string $type = null): void
     {
@@ -57,7 +54,7 @@ final class SlugHistory
     }
 
     /**
-     * Le contenu n'existe plus : ses anciennes adresses sont oubliées.
+     * The content no longer exists: its past addresses are forgotten.
      */
     public function forget(string $type, int|string $id): void
     {
@@ -73,10 +70,10 @@ final class SlugHistory
     }
 
     /**
-     * Efface les entrées plus vieilles que ce nombre de jours.
+     * Deletes the entries older than this number of days.
      *
-     * Un nombre négatif est refusé : il viderait toute la table, en silence et
-     * sans retour possible. Zéro est accepté, mais il efface tout aussi.
+     * A negative number is refused: it would empty the whole table, silently
+     * and with no way back. Zero is accepted, but it deletes everything too.
      */
     public function purgeOlderThan(int $days): int
     {
@@ -88,11 +85,11 @@ final class SlugHistory
     }
 
     /**
-     * Le chemin vers lequel rediriger, ou null quand ce chemin n'a pas d'ancienne
-     * adresse connue.
+     * The path to redirect to, or null when this path has no known past
+     * address.
      *
-     * On regarde les morceaux du chemin du plus précis au plus général : dans
-     * /blog/categorie/mon-article, c'est le dernier qui désigne le contenu.
+     * We look at the pieces of the path from the most specific to the most
+     * general: in /blog/categorie/mon-article, the last one names the content.
      */
     public function newPathFor(string $path, string $scope = '', ?string $type = null): ?string
     {

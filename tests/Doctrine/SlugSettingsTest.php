@@ -71,8 +71,8 @@ final class SlugSettingsTest extends DoctrineTestCase
     }
 
     /**
-     * Le nom de classe d'un proxy engendré ne porte aucun attribut : seules les
-     * métadonnées savent quelle classe se cache derrière.
+     * The class name of a generated proxy carries no attribute: only the
+     * metadata knows which class is behind it.
      */
     public function test_a_generated_proxy_class_name_carries_no_attribute(): void
     {

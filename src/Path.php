@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Kaveraa\SlugHistory;
 
 /**
- * Découpe et recompose un chemin, sans toucher à ce qui n'est pas concerné.
- *
  * Cuts and rebuilds a path, without touching anything else.
  */
 final class Path
 {
     /**
-     * Les morceaux du chemin, dans l'ordre, sans les barres obliques.
+     * The pieces of the path, in order, without the slashes.
      *
      * @return list<string>
      */
@@ -24,8 +22,8 @@ final class Path
     }
 
     /**
-     * Remplace un seul morceau et garde tout le reste tel quel : la barre de
-     * début, celle de fin, et les autres morceaux.
+     * Replaces one piece only and keeps all the rest as it is: the leading
+     * slash, the trailing slash, and the other pieces.
      */
     public static function replaceSegment(string $path, int $index, string $value): string
     {

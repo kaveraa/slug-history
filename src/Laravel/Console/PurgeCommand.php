@@ -10,8 +10,8 @@ use Kaveraa\SlugHistory\SlugHistory;
 /**
  * php artisan slugs:purge --older-than=365
  *
- * Sans option, la durée vient de la configuration. Sans durée nulle part, on ne
- * devine rien : garder pour toujours est un choix valable.
+ * Without the option, the duration comes from the configuration. With no
+ * duration anywhere, we guess nothing: keeping forever is a valid choice.
  */
 final class PurgeCommand extends Command
 {

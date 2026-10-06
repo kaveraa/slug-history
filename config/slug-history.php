@@ -3,21 +3,21 @@
 declare(strict_types=1);
 
 return [
-    // La table qui garde les anciennes adresses.
+    // The table that keeps the old addresses.
     'table' => 'past_slugs',
 
-    // Le code de la redirection. 301 : permanent, c'est ce que veulent les
-    // moteurs. 308 si vous voulez garder la méthode HTTP.
+    // The redirect status code. 301: permanent, this is what search engines
+    // want. 308 if you want to keep the HTTP method.
     'status' => 301,
 
-    // Ajoute le middleware tout seul. Mettez false pour le poser à la main.
+    // Adds the middleware by itself. Set false to add it by hand.
     'auto_redirect' => true,
 
-    // Durée de conservation, en jours. null = pour toujours.
+    // How long to keep the old addresses, in days. null = forever.
     'keep_for_days' => null,
 
-    // La portée par défaut : ce qui rend une adresse unique (une langue, une
-    // rubrique). Chaîne vide quand votre site n'en a pas besoin. Vous pouvez
-    // aussi mettre une fonction qui reçoit la requête et renvoie la portée.
+    // The default scope: what makes an address unique (a language, a
+    // section). Empty string when your site does not need one. You can
+    // also give a function that receives the request and returns the scope.
     'scope' => '',
 ];

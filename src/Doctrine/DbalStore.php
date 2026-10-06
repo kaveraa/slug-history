@@ -13,22 +13,20 @@ use Kaveraa\SlugHistory\PastSlug;
 use Kaveraa\SlugHistory\Store;
 
 /**
- * Le rangement des anciennes adresses dans une table, par Doctrine DBAL.
- *
  * Where the past addresses are kept in a table, through Doctrine DBAL.
  *
- * Volontairement sans entité mappée : l'application n'a rien à déclarer dans sa
- * configuration ORM, et ces écritures peuvent avoir lieu pendant un flush sans
- * en ouvrir un second.
+ * On purpose, there is no mapped entity: the application has nothing to add
+ * to its ORM configuration, and these writes can happen during a flush without
+ * opening a second one.
  */
 final class DbalStore implements Store
 {
-    /** Les colonnes lues, dans l'ordre où elles sont relues. */
+    /** The columns we read, in the order they are read back. */
     private const COLUMNS = 'id, subject_type, subject_id, slug, current_slug, scope, created_at';
 
     public function __construct(
         private readonly Connection $connection,
-        /** Le nom de la table, si l'application ne veut pas du nom par défaut. */
+        /** The table name, if the application does not want the default one. */
         private readonly string $table = 'past_slugs',
     ) {
         if (preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $this->table) !== 1) {
@@ -38,8 +36,8 @@ final class DbalStore implements Store
 
     public function remember(PastSlug $past): void
     {
-        // Une adresse ne mène qu'à un seul endroit : la ligne qui portait déjà
-        // ce couple (slug, scope) laisse la place.
+        // An address leads to only one place: the row that already had this
+        // (slug, scope) pair makes room.
         $this->connection->executeStatement(
             sprintf('DELETE FROM %s WHERE slug = ? AND scope = ?', $this->table),
             [$past->slug, $past->scope],
@@ -128,7 +126,7 @@ final class DbalStore implements Store
     }
 
     /**
-     * Une ligne de la table redevient une ancienne adresse.
+     * A table row becomes a past address again.
      *
      * @param array<string, mixed> $row
      */

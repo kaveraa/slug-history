@@ -13,15 +13,12 @@ use Kaveraa\SlugHistory\Store;
 use stdClass;
 
 /**
- * Le rangement des anciennes adresses dans une table, via le constructeur de
- * requêtes. Pas de modèle Eloquent : une simple table, sans événements.
- *
  * Where past addresses are kept, in a plain table, through the query builder.
  * No Eloquent model: just a table, with no events of its own.
  */
 final class EloquentStore implements Store
 {
-    /** Le format que toutes les bases comprennent. */
+    /** The format every database understands. */
     private const DATE = 'Y-m-d H:i:s';
 
     public function __construct(
@@ -33,8 +30,8 @@ final class EloquentStore implements Store
 
     public function remember(PastSlug $past): void
     {
-        // Le couple (slug, scope) porte l'index unique : la ligne existante est
-        // reprise, même si elle appartenait à un autre contenu.
+        // The (slug, scope) pair carries the unique index: the existing row is
+        // reused, even if it belonged to another content.
         $this->rows()->upsert(
             [[
                 'subject_type' => $past->type,
@@ -120,8 +117,8 @@ final class EloquentStore implements Store
     }
 
     /**
-     * L'identifiant revient toujours en chaîne : la colonne accueille aussi bien
-     * un entier auto-incrémenté qu'un UUID.
+     * The identifier always comes back as a string: the column holds an
+     * auto-increment integer as well as a UUID.
      */
     private function hydrate(stdClass $row): PastSlug
     {

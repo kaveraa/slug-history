@@ -10,7 +10,7 @@ use Kaveraa\SlugHistory\Tests\Doctrine\Entity\Page;
 use Kaveraa\SlugHistory\Tests\Doctrine\Entity\Recipe;
 
 /**
- * Le parcours complet : renommer, renommer encore, laisser la place, disparaître.
+ * The full journey: rename, rename again, make room, disappear.
  */
 final class SlugHistoryListenerTest extends DoctrineTestCase
 {
@@ -49,8 +49,8 @@ final class SlugHistoryListenerTest extends DoctrineTestCase
         $article->slug = 'troisieme';
         $this->em->flush();
 
-        // Pas de chaîne de redirections : la première adresse mène directement
-        // à la dernière.
+        // No chain of redirects: the first address leads straight to the
+        // last one.
         self::assertSame('troisieme', $this->store->find('premier')?->currentSlug);
         self::assertSame('troisieme', $this->store->find('deuxieme')?->currentSlug);
         self::assertSame('/troisieme', $this->history->newPathFor('/premier'));
@@ -67,8 +67,8 @@ final class SlugHistoryListenerTest extends DoctrineTestCase
 
         self::assertNotNull($this->store->find('agenda'));
 
-        // Un autre contenu reprend l'adresse laissée libre : l'historique la lâche,
-        // sinon on redirigerait au nez et à la barbe de son nouveau propriétaire.
+        // Another content takes the freed address: the history lets it go,
+        // otherwise we would redirect right under the nose of its new owner.
         $this->save(new Article('agenda'));
 
         self::assertNull($this->store->find('agenda'));
